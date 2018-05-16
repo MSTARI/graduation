@@ -1,0 +1,13 @@
+@charset 'utf-8';
+
+.m-user {
+    &-list {
+        .appbar {
+            position: fixed !important;
+            top: 0;
+        }
+        .list {
+            margin-top: 64px;
+        }
+    }
+}

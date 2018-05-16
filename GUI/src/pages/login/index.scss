@@ -1,0 +1,18 @@
+@charset 'utf-8';
+
+.m-login {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    &-content {
+        text-align: left;
+        margin-top: 10%;
+        margin-left: 20%;
+        .loginRadio {
+            margin: 20% 0;
+        }
+    }
+}
