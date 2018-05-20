@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const getData = url => {
-    return axios.get(url)
+const getData = (url, params) => {
+    return axios.get(url, params)
         .then(res => {
             if (res.status === 200) {
                 return res.data;
@@ -13,7 +13,7 @@ const getData = url => {
 }
 
 const postData = (url, data) => {
-    return axios.post(url)
+    return axios.post(url, data)
         .then(res => {
             if (res.status === 200) {
                 return res.data;

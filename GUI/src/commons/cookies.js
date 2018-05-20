@@ -1,6 +1,7 @@
 const setCookie = (name, value, day) => {
-    const timestamp = new Date().getTime();
-    document.cookie = `${name}=${value};expires=${timestamp + day * 24 * 3600 * 1000}`;
+    let date = new Date();
+    date.setTime(date.getTime() + day * 24 * 3600 * 1000);
+    document.cookie = `${name}=${value};expires=${date}`;
 }
 
 const getCookie = name => {

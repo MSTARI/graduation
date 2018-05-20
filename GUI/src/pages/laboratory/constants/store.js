@@ -1,11 +1,7 @@
 import {createStore, applyMiddleware} from 'redux';
+import Thunk from 'redux-thunk';
 import reducer from '../reducer';
-const Trunk = require('redux-thunk').default;
 
-const store = (initialState => {
-    const createStoreWithMiddleware = applyMiddleware(Trunk)(createStore);
-    const store = createStoreWithMiddleware(reducer, initialState);
-    return store;
-})({});
+const store = createStore(reducer, applyMiddleware(Thunk));
 
 export default store;

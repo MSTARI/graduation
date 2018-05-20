@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if(err) throw err;
         const dbo = db.db('graduation');
-        dbo.collection('notice').find().sort({_id: -1}).toArray((err, resp) => {
+        dbo.collection('laboratory').find().toArray((err, resp) => {
             if(err) throw err;
             res.send(resp);
             db.close();
@@ -16,14 +16,14 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/add', (req, res) => {
-    const result = req.body;
+router.get('/search', (req, res) => {
+    const searchObj = req.query;
     MongoClient.connect(url, (err, db) => {
-        if (err) throw err;
-        const dbo = db.db("graduation");
-        dbo.collection("notice").insertOne(result, (err, resp) => {
-            if (err) throw err;
-            res.send(true);
+        if(err) throw err;
+        const dbo = db.db('graduation');
+        dbo.collection('laboratory').find(searchObj).toArray((err, resp) => {
+            if(err) throw err;
+            res.send(resp);
             db.close();
         });
     });

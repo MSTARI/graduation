@@ -2,8 +2,15 @@ import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import {List, ListItem} from 'material-ui/List';
 import './index.scss';
+import {getCookie} from '../../commons/cookies';
   
 class Laboratory extends React.Component {
+    componentDidMount() {
+        if(!getCookie('userId')) {
+            this.props.history.push('/login');
+        }
+    }
+
     render() {
         const {history} = this.props;
         return (

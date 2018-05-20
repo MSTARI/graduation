@@ -4,8 +4,7 @@ const initialState = {
     dataSource: []
 };
 
-const reducer = (state, action) => {
-    state = initialState;
+const reducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
         case ActionType.GETDATA:

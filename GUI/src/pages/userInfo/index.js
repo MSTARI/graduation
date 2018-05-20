@@ -1,7 +1,7 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import store from './constants/store';
-import List from './components/List';
+import Info from './components/Info';
 import './index.scss';
 
 class Administrator extends React.Component {
@@ -9,7 +9,7 @@ class Administrator extends React.Component {
         return (
             <Provider store={store}>
                 <div className="m-user">
-                    <List history={this.props.history} />
+                    <Info history={this.props.history} />
                 </div>
             </Provider>
         );

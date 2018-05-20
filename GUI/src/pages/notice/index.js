@@ -3,6 +3,7 @@ import {Provider} from 'react-redux';
 import store from './constants/store';
 import List from './components/List';
 import './index.scss';
+import AddDialog from './components/AddDialog';
 
 class Notice extends React.Component {
     render() {
@@ -10,6 +11,7 @@ class Notice extends React.Component {
             <Provider store={store}>
                 <div className="m-notice">
                     <List history={this.props.history} />
+                    <AddDialog />
                 </div>
             </Provider>
         );

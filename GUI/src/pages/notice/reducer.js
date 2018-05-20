@@ -1,14 +1,18 @@
 import ActionType from './constants/ActionType';
 
 const initialState = {
-    dataSource: []
+    dataSource: [],
+    detailDia: false,
+    addDia: false
 };
 
-const reducer = (state, action) => {
-    state = initialState;
+const reducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
         case ActionType.GETDATA:
+        case ActionType.ADDDATA:
+        case ActionType.OPENDIALOG:
+        case ActionType.CLOSEDIALOG:
             return {
                 ...state,
                 ...payload

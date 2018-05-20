@@ -4,7 +4,8 @@ import AppBar from 'material-ui/AppBar';
 import {List, ListItem} from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
-import {noticeData} from '../action';
+import {noticeData, openDetail, openAdd} from '../action';
+import DetailDialog from './DetailDialog';
 
 const mapStateToProps = state => {
     return {
@@ -13,16 +14,34 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    noticeData
+    noticeData,
+    openDetail,
+    openAdd
 };
 
 class Lists extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            content: ''
+        };
+    }
+
     componentDidMount() {
         this.props.noticeData();
     }
 
+    detailInfo(title, content) {
+        this.setState({
+            title,
+            content
+        });
+    }
+
     render() {
-        const {dataSource, history} = this.props;
+        const {dataSource, history, openDetail, openAdd} = this.props;
+        const {title, content} = this.state;
         return (
             <div className="m-notice-list">
                 <AppBar
@@ -31,9 +50,7 @@ class Lists extends React.Component {
                     iconElementLeft={<IconButton iconClassName="material-icons">arrow_back</IconButton>}
                     onLeftIconButtonClick={() => {history.goBack()}}
                     iconElementRight={<IconButton iconClassName="material-icons">add_circle_outline</IconButton>}
-                    onRightIconButtonClick={() => {
-
-                    }}
+                    onRightIconButtonClick={() => openAdd()}
                 />
                 {
                     !dataSource.length ? null :
@@ -46,12 +63,17 @@ class Lists extends React.Component {
                                         primaryText={item.title}
                                         secondaryText={item.content}
                                         leftIcon={<FontIcon className="material-icons">event_note</FontIcon>}
+                                        onClick={() => {
+                                            this.detailInfo(item.title, item.content);
+                                            openDetail();
+                                        }}
                                     />
                                 );
                             })
                         }
                     </List>
                 }
+                <DetailDialog title={title} content={content} />
             </div>
         );
     };
