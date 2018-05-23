@@ -11,7 +11,7 @@ import {
     setClassroom,
     setStart,
     setEnd,
-    searchData
+    search
 } from '../action';
 
 const mapStateToProps = state => {
@@ -30,7 +30,7 @@ const mapDispatchToProps = {
     setClassroom,
     setStart,
     setEnd,
-    searchData
+    search
 };
 
 class Dialogs extends React.Component {
@@ -63,7 +63,7 @@ class Dialogs extends React.Component {
             setClassroom,
             setStart,
             setEnd,
-            searchData
+            search
         } = this.props;
         return (
             <Dialog
@@ -73,7 +73,7 @@ class Dialogs extends React.Component {
                         primary={true}
                         onClick={() => {
                             closeDialog();
-                            searchData(classroom);
+                            search(classroom);
                         }}
                     />,
                     <FlatButton

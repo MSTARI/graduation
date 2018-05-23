@@ -41,8 +41,10 @@ class Dialogs extends React.Component {
                         label="确定"
                         primary={true}
                         onClick={() => {
-                            addNew(title, content);
-                            closeAdd();
+                            if(title && content) {
+                                addNew(title, content);
+                                closeAdd();
+                            }
                         }}
                     />,
                     <FlatButton

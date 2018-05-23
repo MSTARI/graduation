@@ -29,4 +29,17 @@ router.post('/add', (req, res) => { // 添加公告
     });
 });
 
+router.post('/delete', (req, res) => { // 删除公告
+    const result = req.body;
+    MongoClient.connect(url, (err, db) => {
+        if (err) throw err;
+        const dbo = db.db("graduation");
+        dbo.collection("notice").deleteOne(result, (err, resp) => {
+            if (err) throw err;
+            res.send(true);
+            db.close();
+        });
+    });
+});
+
 module.exports = router;

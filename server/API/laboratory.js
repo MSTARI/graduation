@@ -45,4 +45,20 @@ router.post('/update', (req, res) => { // 预约实验室
     });
 });
 
+router.post('/cancel', (req, res) => { // 用户取消预约实验室
+    const result = req.body;
+    const {classroom, dateIndex, num} = result.order;
+    MongoClient.connect(url, (err, db) => {
+        if (err) throw err;
+        const dbo = db.db("graduation");
+        const where = {name: classroom},
+            update = {$set: {[`plan.${dateIndex}.status.${num}`]: null}};
+        dbo.collection("laboratory").updateOne(where, update, (err, resp) => {
+            if (err) throw err;
+            res.send(true);
+            db.close();
+        });
+    });
+});
+
 module.exports = router;

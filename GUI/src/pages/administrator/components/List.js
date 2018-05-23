@@ -37,29 +37,32 @@ class Lists extends React.Component {
                     <List className="list">
                         {
                             dataSource.map(item => {
-                                return (
-                                    <div key={item._id}>
-                                        <ListItem
-                                            primaryText={
-                                                <div>
-                                                    <p>
-                                                        <FontIcon className="material-icons">person</FontIcon> {item.name}
-                                                    </p>
-                                                    <p>
-                                                        <FontIcon className="material-icons">email</FontIcon>  {item.email}
-                                                    </p>
-                                                    <p>
-                                                        <FontIcon className="material-icons">phone</FontIcon>  {item.phone}
-                                                    </p>
-                                                    <p>
-                                                        <FontIcon className="material-icons">my_location</FontIcon> {item.address}
-                                                    </p>
-                                                </div>
-                                            }
-                                        />
-                                        <Divider />
-                                    </div>
-                                );
+                                if(item.authority) {
+                                    return (
+                                        <div key={item._id}>
+                                            <ListItem
+                                                primaryText={
+                                                    <div>
+                                                        <p>
+                                                            <FontIcon className="material-icons">person</FontIcon> {item.name}
+                                                        </p>
+                                                        <p>
+                                                            <FontIcon className="material-icons">email</FontIcon>  {item.email}
+                                                        </p>
+                                                        <p>
+                                                            <FontIcon className="material-icons">phone</FontIcon>  {item.phone}
+                                                        </p>
+                                                        <p>
+                                                            <FontIcon className="material-icons">my_location</FontIcon> {item.address}
+                                                        </p>
+                                                    </div>
+                                                }
+                                            />
+                                            <Divider />
+                                        </div>
+                                    );
+                                }
+                                return null;
                             })
                         }
                     </List>

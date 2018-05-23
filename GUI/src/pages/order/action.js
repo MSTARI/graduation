@@ -58,7 +58,7 @@ const closeDetail = () => (dispatch, getState) => {
     }));
 };
 
-const searchData = classroom => (dispatch, getState) => {
+const search = classroom => (dispatch, getState) => {
     getData('/laboratory_api/search', {
         params: {
             name: classroom
@@ -74,7 +74,7 @@ const searchData = classroom => (dispatch, getState) => {
 };
 
 const getUser = () => (dispatch, getState) => {
-    postData('/userInfo_api')
+    postData('/personInfo_api')
         .then(res => {
             if(res.length) {
                 dispatch(createAction(ActionType.GETDATA, {
@@ -85,7 +85,7 @@ const getUser = () => (dispatch, getState) => {
 };
 
 const addOrder = (id, order1, classroom, order2) => (dispatch, getState) => {
-    postData('/userInfo_api/addOrder', {
+    postData('/personInfo_api/addOrder', {
         id,
         order: order1
     });
@@ -95,7 +95,7 @@ const addOrder = (id, order1, classroom, order2) => (dispatch, getState) => {
     })
         .then(res => {
             if(res) {
-                dispatch(searchData());
+                dispatch(search());
             }
         });
 };
@@ -107,7 +107,7 @@ export {
     setClassroom,
     setStart,
     setEnd,
-    searchData,
+    search,
     openDetail,
     closeDetail,
     getUser,

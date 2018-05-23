@@ -1,7 +1,12 @@
 import ActionType from './constants/ActionType';
 
 const initialState = {
-    dataSource: []
+    dataSource: [],
+    allData: [],
+    open: false,
+    id: '',
+    order1: {},
+    order2: {}
 };
 
 const reducer = (state = initialState, action) => {

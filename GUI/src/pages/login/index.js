@@ -21,7 +21,7 @@ class Login extends React.Component {
     }
 
     checkLogin(username, password) {
-        postData('/userInfo_api')
+        postData('/personInfo_api')
             .then(res => {
                 if(res.length) {
                     const result = res.filter(item => {
@@ -53,12 +53,12 @@ class Login extends React.Component {
                 />
                 <div className="m-login-content">
                     <TextField
-                        floatingLabelText="UserName"
+                        floatingLabelText="账号"
                         value={username}
                         onChange={(e, value) => this.changeValue('username', value)}
                     />
                     <TextField
-                        floatingLabelText="Password"
+                        floatingLabelText="密码"
                         type="password"
                         value={password}
                         onChange={(e, value) => this.changeValue('password', value)}

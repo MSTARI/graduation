@@ -4,8 +4,8 @@ import AppBar from 'material-ui/AppBar';
 import {List, ListItem} from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
-import {noticeData, openDetail, openAdd} from '../action';
-import DetailDialog from './DetailDialog';
+import RaisedButton from 'material-ui/RaisedButton';
+import {noticeData, openDetail, openAdd, deleteNew} from '../action';
 
 const mapStateToProps = state => {
     return {
@@ -16,32 +16,29 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     noticeData,
     openDetail,
-    openAdd
+    openAdd,
+    deleteNew
 };
 
 class Lists extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-            content: ''
-        };
-    }
-
     componentDidMount() {
         this.props.noticeData();
     }
 
-    detailInfo(title, content) {
-        this.setState({
-            title,
-            content
-        });
+    formatTime(timestamp) {
+        const time = new Date(timestamp);
+        const year = time.getFullYear(),
+            month = time.getMonth() + 1,
+            day = time.getDate(),
+            hour = time.getHours(),
+            minute = time.getMinutes(),
+            second = time.getSeconds();
+        return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
     }
 
     render() {
-        const {dataSource, history, openDetail, openAdd} = this.props;
-        const {title, content} = this.state;
+        const {dataSource, history, openDetail, openAdd, deleteNew} = this.props;
+        const {admin} = history.location.state.query;
         return (
             <div className="m-notice-list">
                 <AppBar
@@ -49,7 +46,7 @@ class Lists extends React.Component {
                     title="公告栏"
                     iconElementLeft={<IconButton iconClassName="material-icons">arrow_back</IconButton>}
                     onLeftIconButtonClick={() => {history.goBack()}}
-                    iconElementRight={<IconButton iconClassName="material-icons">add_circle_outline</IconButton>}
+                    iconElementRight={!admin ? null : <IconButton iconClassName="material-icons">add_circle_outline</IconButton>}
                     onRightIconButtonClick={() => openAdd()}
                 />
                 {
@@ -58,22 +55,35 @@ class Lists extends React.Component {
                         {
                             dataSource.map(item => {
                                 return (
-                                    <ListItem
-                                        key={item._id}
-                                        primaryText={item.title}
-                                        secondaryText={item.content}
-                                        leftIcon={<FontIcon className="material-icons">event_note</FontIcon>}
-                                        onClick={() => {
-                                            this.detailInfo(item.title, item.content);
-                                            openDetail();
-                                        }}
-                                    />
+                                    <div key={item._id}>
+                                        <ListItem
+                                            primaryText={item.title}
+                                            secondaryText={
+                                                <p>
+                                                    <span>内容：{item.content}</span><br />
+                                                    <span>时间：{this.formatTime(item.time)}</span>
+                                                </p>
+                                            }
+                                            secondaryTextLines={2}
+                                            leftIcon={<FontIcon className="material-icons">event_note</FontIcon>}
+                                            onClick={() => openDetail(item.title, item.content, item.time)}
+                                        />
+                                        {
+                                            !admin ? null :
+                                            <div style={{textAlign: 'right'}}>
+                                                <RaisedButton
+                                                    icon={<FontIcon className="material-icons">delete_forever</FontIcon>}
+                                                    secondary={true}
+                                                    onClick={() => deleteNew(item.title)}
+                                                />
+                                            </div>
+                                        }
+                                    </div>
                                 );
                             })
                         }
                     </List>
                 }
-                <DetailDialog title={title} content={content} />
             </div>
         );
     };

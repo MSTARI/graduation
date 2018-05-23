@@ -3,7 +3,9 @@ import ActionType from './constants/ActionType';
 const initialState = {
     dataSource: [],
     detailDia: false,
-    addDia: false
+    addDia: false,
+    title: '',
+    content: ''
 };
 
 const reducer = (state = initialState, action) => {

@@ -7,28 +7,49 @@ import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import {getCookie} from '../../../commons/cookies';
 import formatDate from '../../../commons/formatDate';
-import {userData,cancelOrder} from '../action';
+import {userData, laborData, openDia} from '../action';
 
 const cookie = getCookie('userId');
 
 const mapStateToProps = state => {
     return {
-        dataSource: state.dataSource
+        dataSource: state.dataSource,
+        allData: state.allData
     };
 };
 
 const mapDispatchToProps = {
     userData,
-    cancelOrder
+    laborData,
+    openDia
 };
 
 class Lists extends React.Component {
     componentDidMount() {
         this.props.userData(cookie);
+        this.props.laborData();
+    }
+
+    dateIndex(classroom, date) {
+        let result = 0;
+        this.props.allData.forEach(item => {
+            if(item.name === classroom) {
+                item.plan.forEach((each, index) => {
+                    if(each.date === date) {
+                        result = index;
+                    }
+                });
+            }
+        });
+        return result;
+    }
+
+    jump(history) {
+        history.push('/order');
     }
 
     render() {
-        const {dataSource, history, cancelOrder} = this.props;
+        const {dataSource, history, openDia} = this.props;
         return (
             <div className="m-admin-list">
                 <AppBar
@@ -41,6 +62,15 @@ class Lists extends React.Component {
                     !dataSource.length ? null :
                     <List className="list">
                         {
+                            !dataSource[0].order.length ?
+                            <div
+                                style={{marginTop: '60%',color: '#00BCD4',textAlign: 'center'}}
+                                onClick={() => this.jump(history)}
+                            >
+                                没有数据哦!
+                                <br /><br />
+                                请点击文本跳转到实验室预约
+                            </div> :
                             dataSource[0].order.map((item, index) => {
                                 return (
                                     <div key={index}>
@@ -63,9 +93,17 @@ class Lists extends React.Component {
                                                         label="取消预约"
                                                         primary={true}
                                                         fullWidth={true}
-                                                        onClick={() => cancelOrder(cookie, {
-                                                            classroom: item.classroom, date: item.date
-                                                        })}
+                                                        onClick={() => {
+                                                            openDia(cookie, {
+                                                                classroom: item.classroom,
+                                                                date: item.date,
+                                                                num: item.num
+                                                            }, {
+                                                                classroom: item.classroom,
+                                                                dateIndex: this.dateIndex(item.classroom, item.date),
+                                                                num: item.num
+                                                            });
+                                                        }}
                                                     />
                                                 </div>
                                             }

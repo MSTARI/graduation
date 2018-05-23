@@ -30,6 +30,10 @@ const mapDispatchToProps = {
 };
 
 class Lists extends React.Component {
+    componentWillUnmount() {
+        window.location.reload();
+    }
+
     render() {
         const {searchData, history, classroom, openDialog, openDetail, start, end} = this.props;
         return (
@@ -44,7 +48,7 @@ class Lists extends React.Component {
                 />
                 {
                     !searchData.length ?
-                    <div className="nodata">没有数据哦<br /><br />请先点击右上角进行对应实验室预约！</div> :
+                    <div className="nodata">没有数据哦!<br /><br />请先点击右上角进行对应实验室预约</div> :
                     <Table
                         headerStyle={{marginTop: '64px'}}
                         height={tableHeight + 'px'}

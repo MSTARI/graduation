@@ -5,7 +5,7 @@ import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {userData, openDialog} from '../action';
-import {getCookie} from '../../../commons/cookies';
+import {getCookie, clearCookie} from '../../../commons/cookies';
 
 const mapStateToProps = state => {
     return {
@@ -21,6 +21,11 @@ const mapDispatchToProps = {
 class Lists extends React.Component {
     componentDidMount() {
         this.props.userData();
+    }
+
+    logout(history) {
+        clearCookie('userId');
+        history.push('/login');
     }
 
     render() {
@@ -60,6 +65,11 @@ class Lists extends React.Component {
                         label="修改密码"
                         primary={true}
                         onClick={() => openDialog()}
+                    />
+                    <RaisedButton
+                        label="注销"
+                        primary={true}
+                        onClick={() => this.logout(history)}
                     />
                 </div>
             </div>

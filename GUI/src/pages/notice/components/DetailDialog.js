@@ -6,7 +6,9 @@ import {closeDetail} from '../action';
 
 const mapStateToProps = state => {
     return {
-        detailDia: state.detailDia
+        detailDia: state.detailDia,
+        title: state.title,
+        content: state.content
     };
 };
 

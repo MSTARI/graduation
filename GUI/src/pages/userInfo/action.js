@@ -3,7 +3,7 @@ import createAction from './constants/createAction';
 import {postData} from '../../commons/getData';
 
 const userData = () => (dispatch, getState) => {
-    postData('/userInfo_api')
+    postData('/personInfo_api')
         .then(res => {
             if(res.length) {
                 dispatch(createAction(ActionType.GETDATA, {
@@ -14,7 +14,7 @@ const userData = () => (dispatch, getState) => {
 };
 
 const updatePassword = (id, password) => (dispatch, getState) => {
-    postData('/userInfo_api/update', {
+    postData('/personInfo_api/update', {
         id,
         password
     })

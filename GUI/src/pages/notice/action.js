@@ -9,6 +9,10 @@ const noticeData = () => (dispatch, getState) => {
                 dispatch(createAction(ActionType.GETDATA, {
                     dataSource: res
                 }));
+            } else {
+                dispatch(createAction(ActionType.GETDATA, {
+                    dataSource: []
+                }));
             }
         });
 };
@@ -16,7 +20,8 @@ const noticeData = () => (dispatch, getState) => {
 const addNew = (title, content) => (dispatch, getState) => {
     postData('/notice_api/add', {
         title,
-        content
+        content,
+        time: new Date().getTime()
     })
         .then(res => {
             if(res) {
@@ -25,9 +30,23 @@ const addNew = (title, content) => (dispatch, getState) => {
         });
 };
 
-const openDetail = () => (dispatch, getState) => {
+const deleteNew = title => (dispatch, getState) => {
+    postData('/notice_api/delete', {
+        title
+    })
+        .then(res => {
+            if(res) {
+                dispatch(noticeData());
+            }
+        });
+};
+
+const openDetail = (title, content, time) => (dispatch, getState) => {
     dispatch(createAction(ActionType.OPENDIALOG, {
-        detailDia: true
+        detailDia: true,
+        title,
+        content,
+        time
     }));
 };
 
@@ -52,6 +71,7 @@ const closeAdd = () => (dispatch, getState) => {
 export {
     noticeData,
     addNew,
+    deleteNew,
     openDetail,
     closeDetail,
     openAdd,
