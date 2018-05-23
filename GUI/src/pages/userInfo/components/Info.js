@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
-import {userData} from '../action';
+import RaisedButton from 'material-ui/RaisedButton';
+import {userData, openDialog} from '../action';
 import {getCookie} from '../../../commons/cookies';
 
 const mapStateToProps = state => {
@@ -13,7 +14,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    userData
+    userData,
+    openDialog
 };
 
 class Lists extends React.Component {
@@ -22,10 +24,10 @@ class Lists extends React.Component {
     }
 
     render() {
-        const {dataSource, history} = this.props;
+        const {dataSource, history, openDialog} = this.props;
         const cookie = getCookie('userId');
         return (
-            <div className="m-user-list">
+            <div className="m-user-info">
                 <AppBar
                     className="appbar"
                     title="个人信息"
@@ -53,6 +55,13 @@ class Lists extends React.Component {
                         return false;
                     })
                 }
+                <div className="btn">
+                    <RaisedButton
+                        label="修改密码"
+                        primary={true}
+                        onClick={() => openDialog()}
+                    />
+                </div>
             </div>
         );
     };

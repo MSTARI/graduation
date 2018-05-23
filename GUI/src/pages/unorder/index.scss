@@ -1,17 +1,13 @@
 @charset 'utf-8';
 
-.m-user {
-    &-info {
+.m-unorder {
+    &-list {
         .appbar {
             position: fixed !important;
             top: 0;
         }
         .list {
-            margin-top: 100px;
-            margin-left: 5%;
-        }
-        .btn {
-            text-align: center;
+            margin-top: 64px;
         }
     }
 }

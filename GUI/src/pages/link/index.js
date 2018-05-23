@@ -24,12 +24,15 @@ class Laboratory extends React.Component {
                         style={{background: '#E0F7FA', marginBottom: '5%'}}
                         primaryText="实验室预约"
                         onClick={() => {
-                            history.push('/laboratory');
+                            history.push('/order');
                         }}
                     />
                     <ListItem
                         style={{background: '#B2EBF2', marginBottom: '5%'}}
                         primaryText="取消预约"
+                        onClick={() => {
+                            history.push('/unorder');
+                        }}
                     />
                     <ListItem
                         style={{background: '#80DEEA', marginBottom: '5%'}}

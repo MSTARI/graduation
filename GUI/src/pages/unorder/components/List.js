@@ -2,10 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import {List, ListItem} from 'material-ui/List';
-import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import Divider from 'material-ui/Divider';
-import {adminData} from '../action';
+import RaisedButton from 'material-ui/RaisedButton';
+import {getCookie} from '../../../commons/cookies';
+import formatDate from '../../../commons/formatDate';
+import {userData,cancelOrder} from '../action';
+
+const cookie = getCookie('userId');
 
 const mapStateToProps = state => {
     return {
@@ -14,21 +18,22 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    adminData
+    userData,
+    cancelOrder
 };
 
 class Lists extends React.Component {
     componentDidMount() {
-        this.props.adminData();
+        this.props.userData(cookie);
     }
 
     render() {
-        const {dataSource, history} = this.props;
+        const {dataSource, history, cancelOrder} = this.props;
         return (
             <div className="m-admin-list">
                 <AppBar
                     className="appbar"
-                    title="管理员信息"
+                    title="个人预约列表"
                     iconElementLeft={<IconButton iconClassName="material-icons">arrow_back</IconButton>}
                     onLeftIconButtonClick={() => {history.goBack()}}
                 />
@@ -36,24 +41,32 @@ class Lists extends React.Component {
                     !dataSource.length ? null :
                     <List className="list">
                         {
-                            dataSource.map(item => {
+                            dataSource[0].order.map((item, index) => {
                                 return (
-                                    <div key={item._id}>
+                                    <div key={index}>
                                         <ListItem
                                             primaryText={
                                                 <div>
                                                     <p>
-                                                        <FontIcon className="material-icons">person</FontIcon> {item.name}
+                                                        实验室：{item.classroom}
                                                     </p>
                                                     <p>
-                                                        <FontIcon className="material-icons">email</FontIcon>  {item.email}
+                                                        日期：{formatDate(item.date)}
                                                     </p>
                                                     <p>
-                                                        <FontIcon className="material-icons">phone</FontIcon>  {item.phone}
+                                                        课程：{item.course}
                                                     </p>
                                                     <p>
-                                                        <FontIcon className="material-icons">my_location</FontIcon> {item.address}
+                                                        课节：{item.num + 1}
                                                     </p>
+                                                    <RaisedButton
+                                                        label="取消预约"
+                                                        primary={true}
+                                                        fullWidth={true}
+                                                        onClick={() => cancelOrder(cookie, {
+                                                            classroom: item.classroom, date: item.date
+                                                        })}
+                                                    />
                                                 </div>
                                             }
                                         />

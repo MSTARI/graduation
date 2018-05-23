@@ -5,8 +5,8 @@ const setCookie = (name, value, day) => {
 }
 
 const getCookie = name => {
-    var cname = name + "=";
-    const coo = document.cookie.split(';');
+    const cname = name + "=",
+        coo = document.cookie.split(';');
     for (let i = 0; i < coo.length; i++) {
         let c = coo[i].trim();
         if (c.indexOf(cname) === 0) {
@@ -16,7 +16,12 @@ const getCookie = name => {
     return '';
 }
 
+const clearCookie = name => {
+    setCookie(name, '', -1);
+}
+
 export {
     setCookie,
-    getCookie
+    getCookie,
+    clearCookie
 }

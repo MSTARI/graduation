@@ -13,6 +13,33 @@ const userData = () => (dispatch, getState) => {
         });
 };
 
+const updatePassword = (id, password) => (dispatch, getState) => {
+    postData('/userInfo_api/update', {
+        id,
+        password
+    })
+        .then(res => {
+            if(res) {
+                dispatch(userData());
+            }
+        });
+};
+
+const openDialog = () => (dispatch, getState) => {
+    dispatch(createAction(ActionType.UPDATEPASSWORD, {
+        open: true
+    }));
+};
+
+const closeDialog = () => (dispatch, getState) => {
+    dispatch(createAction(ActionType.UPDATEPASSWORD, {
+        open: false
+    }));
+};
+
 export {
-    userData
+    userData,
+    openDialog,
+    closeDialog,
+    updatePassword
 };

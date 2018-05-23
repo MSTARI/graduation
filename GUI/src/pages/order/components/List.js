@@ -11,13 +11,16 @@ import {
 } from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
 import {openDialog, openDetail} from '../action';
+import formatDate from '../../../commons/formatDate';
 
 const tableHeight = window.screen.height - (64 + 58); // 表格body高度
 
 const mapStateToProps = state => {
     return {
         searchData: state.searchData,
-        classroom: state.classroom
+        classroom: state.classroom,
+        start: state.start,
+        end: state.end
     };
 };
 
@@ -27,11 +30,10 @@ const mapDispatchToProps = {
 };
 
 class Lists extends React.Component {
-
     render() {
-        const {searchData, history, classroom, openDialog, openDetail} = this.props;
+        const {searchData, history, classroom, openDialog, openDetail, start, end} = this.props;
         return (
-            <div className="m-laboratory-list">
+            <div className="m-order-list">
                 <AppBar
                     className="appbar"
                     title={classroom + ' 预约列表'}
@@ -66,15 +68,37 @@ class Lists extends React.Component {
                             displayRowCheckbox={false}
                         >
                         {
+                            start && end ?
+                            searchData[0].plan.map(item => {
+                                if(item.date >= start.getTime() && item.date <= (end.getTime() + 8 * 60 * 60 * 1000)) {
+                                    return (
+                                        <TableRow key={item.date}>
+                                            <TableRowColumn colSpan="3">{formatDate(item.date)}</TableRowColumn>
+                                            {
+                                                item.status.map((each, index) => {
+                                                    return (
+                                                        <TableRowColumn key={index}>
+                                                            <span onClick={() => openDetail(each, item.date, index)}>
+                                                                {each ? '预' : '未'}
+                                                            </span>
+                                                        </TableRowColumn>
+                                                    );
+                                                })
+                                            }
+                                        </TableRow>
+                                    );
+                                }
+                                return null;
+                            }) :
                             searchData[0].plan.map(item => {
                                 return (
                                     <TableRow key={item.date}>
-                                        <TableRowColumn colSpan="3">{item.date}</TableRowColumn>
+                                        <TableRowColumn colSpan="3">{formatDate(item.date)}</TableRowColumn>
                                         {
                                             item.status.map((each, index) => {
                                                 return (
                                                     <TableRowColumn key={index}>
-                                                        <span onClick={() => openDetail(each)}>
+                                                        <span onClick={() => openDetail(each, item.date, index)}>
                                                             {each ? '预' : '未'}
                                                         </span>
                                                     </TableRowColumn>

@@ -1,6 +1,6 @@
 import ActionType from './constants/ActionType';
 import createAction from './constants/createAction';
-import {getData} from '../../commons/getData';
+import {getData, postData} from '../../commons/getData';
 
 const laborData = () => (dispatch, getState) => {
     getData('/laboratory_api')
@@ -43,10 +43,12 @@ const setEnd = end => (dispatch, getState) => {
     }));
 };
 
-const openDetail = detail => (dispatch, getState) => {
+const openDetail = (detail, date, num) => (dispatch, getState) => {
     dispatch(createAction(ActionType.DIALOG, {
         detailDia: true,
-        detail
+        detail,
+        date,
+        num
     }));
 };
 
@@ -71,6 +73,33 @@ const searchData = classroom => (dispatch, getState) => {
         });
 };
 
+const getUser = () => (dispatch, getState) => {
+    postData('/userInfo_api')
+        .then(res => {
+            if(res.length) {
+                dispatch(createAction(ActionType.GETDATA, {
+                    userData: res
+                }));
+            }
+        });
+};
+
+const addOrder = (id, order1, classroom, order2) => (dispatch, getState) => {
+    postData('/userInfo_api/addOrder', {
+        id,
+        order: order1
+    });
+    postData('/laboratory_api/update', {
+        classroom,
+        order: order2
+    })
+        .then(res => {
+            if(res) {
+                dispatch(searchData());
+            }
+        });
+};
+
 export {
     laborData,
     openDialog,
@@ -80,5 +109,7 @@ export {
     setEnd,
     searchData,
     openDetail,
-    closeDetail
+    closeDetail,
+    getUser,
+    addOrder
 };
