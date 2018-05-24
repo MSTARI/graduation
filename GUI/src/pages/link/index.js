@@ -5,8 +5,6 @@ import './index.scss';
 import {getCookie} from '../../commons/cookies';
 import verifyAdmin from '../../commons/verifyAdmin';
 
-const cookie = getCookie('userId');
-  
 class Laboratory extends React.Component {
     constructor(props) {
         super(props);
@@ -15,15 +13,22 @@ class Laboratory extends React.Component {
         };
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     componentDidMount() {
-        if(!cookie) {
+        this._isMounted = true;
+        if(!getCookie('userId')) {
             this.props.history.push('/login');
         }
-        verifyAdmin(cookie)
+        verifyAdmin(getCookie('userId'))
             .then(res => {
-                this.setState({
-                    admin: res
-                });
+                if(this._isMounted) {
+                    this.setState({
+                        admin: res
+                    });
+                }
             });
     }
 
@@ -41,7 +46,7 @@ class Laboratory extends React.Component {
                         style={{background: '#E0F7FA', marginBottom: '5%'}}
                         primaryText="实验室预约"
                         onClick={() => {
-                            history.push('/order', {query: {admin}});
+                            history.push(`/order#${admin}`);
                         }}
                     />
                     {
@@ -68,7 +73,7 @@ class Laboratory extends React.Component {
                         style={{background: '#80DEEA', marginBottom: '5%'}}
                         primaryText="公告栏"
                         onClick={() => {
-                            history.push('/notice', {query: {admin}});
+                            history.push(`/notice#${admin}`);
                         }}
                     />
                     <ListItem
@@ -82,7 +87,7 @@ class Laboratory extends React.Component {
                         style={{background: '#26C6DA'}}
                         primaryText="联系管理员"
                         onClick={() => {
-                            history.push('/administrator', {query: {admin}});
+                            history.push('/administrator');
                         }}
                     />
                     {

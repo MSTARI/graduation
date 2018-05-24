@@ -9,7 +9,7 @@ class Administrator extends React.Component {
         return (
             <Provider store={store}>
                 <div className="m-admin">
-                    <List history={this.props.history} />
+                    <List history={this.props.history} location={this.props.location} />
                 </div>
             </Provider>
         );

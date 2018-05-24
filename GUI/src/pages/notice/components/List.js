@@ -37,8 +37,8 @@ class Lists extends React.Component {
     }
 
     render() {
-        const {dataSource, history, openDetail, openAdd, deleteNew} = this.props;
-        const {admin} = history.location.state.query;
+        const {dataSource, history, location, openDetail, openAdd, deleteNew} = this.props;
+        const admin = !!location.hash.slice(1);
         return (
             <div className="m-notice-list">
                 <AppBar

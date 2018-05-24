@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {HashRouter, Route, Switch} from 'react-router-dom';
 import Link from './link';
 import Login from './login';
 import Order from './order';
@@ -11,7 +11,7 @@ import UserInfo from './userInfo';
 class App extends React.Component {
     render() {
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <Switch>
                     <Route exact path="/" component={Link} />
                     <Route path="/login" component={Login} />
@@ -21,7 +21,7 @@ class App extends React.Component {
                     <Route path="/administrator" component={Administrator} />
                     <Route path="/userInfo" component={UserInfo} />
                 </Switch>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }
