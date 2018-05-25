@@ -11,9 +11,9 @@ class Order extends React.Component {
         return (
             <Provider store={store}>
                 <div className="m-order">
-                    <List history={this.props.history} location={this.props.location} />
+                    <List history={this.props.history} />
                     <Dialog />
-                    <DetailDialog />
+                    <DetailDialog location={this.props.location} />
                 </div>
             </Provider>
         );

@@ -52,6 +52,12 @@ class Lists extends React.Component {
                                         <FontIcon className="material-icons">person</FontIcon> {item.name}
                                     </p>
                                     <p>
+                                        <FontIcon className="material-icons">email</FontIcon> {item.email}
+                                    </p>
+                                    <p>
+                                        <FontIcon className="material-icons">phone</FontIcon> {item.phone}
+                                    </p>
+                                    <p>
                                         <FontIcon className="material-icons">my_location</FontIcon> {item.address}
                                     </p>
                                 </div>

@@ -1,0 +1,17 @@
+@charset 'utf-8';
+
+.m-laborm {
+    &-list {
+        .appbar {
+            position: fixed !important;
+            top: 0;
+        }
+        .list {
+            margin-top: 64px;
+            .btn {
+                display: flex;
+                justify-content: space-around;
+            }
+        }
+    }
+}

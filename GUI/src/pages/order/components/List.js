@@ -35,7 +35,7 @@ class Lists extends React.Component {
     }
 
     render() {
-        const {searchData, history, location, classroom, openDialog, openDetail, start, end} = this.props;
+        const {searchData, history, classroom, openDialog, openDetail, start, end} = this.props;
         return (
             <div className="m-order-list">
                 <AppBar

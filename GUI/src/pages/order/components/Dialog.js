@@ -5,14 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
-import {
-    laborData,
-    closeDialog,
-    setClassroom,
-    setStart,
-    setEnd,
-    search
-} from '../action';
+import {laborData, closeDialog, setInfo, search} from '../action';
 
 const mapStateToProps = state => {
     return {
@@ -27,9 +20,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     laborData,
     closeDialog,
-    setClassroom,
-    setStart,
-    setEnd,
+    setInfo,
     search
 };
 
@@ -53,18 +44,7 @@ class Dialogs extends React.Component {
     }
 
     render() {
-        const {
-            closeDialog,
-            open,
-            dataSource,
-            classroom,
-            start,
-            end,
-            setClassroom,
-            setStart,
-            setEnd,
-            search
-        } = this.props;
+        const {closeDialog, open, dataSource, classroom, start, end, setInfo, search} = this.props;
         return (
             <Dialog
                 actions={[
@@ -91,7 +71,7 @@ class Dialogs extends React.Component {
                     autoWidth={true}
                     value={classroom}
                     floatingLabelText="实验室:"
-                    onChange={(e, index, value) => setClassroom(value)}
+                    onChange={(e, index, value) => setInfo('classroom', value)}
                 >
                 {
                     !dataSource.length ? null :
@@ -110,7 +90,7 @@ class Dialogs extends React.Component {
                     maxDate={this.selectDate('max')}
                     disabled={!classroom}
                     value={start}
-                    onChange={(e, date) => setStart(date)}
+                    onChange={(e, date) => setInfo('start', date)}
                 />
                 <DatePicker
                     textFieldStyle={{width: '100%'}}
@@ -120,7 +100,7 @@ class Dialogs extends React.Component {
                     maxDate={this.selectDate('max')}
                     disabled={!classroom}
                     value={end}
-                    onChange={(e, date) => setEnd(date)}
+                    onChange={(e, date) => setInfo('end', date)}
                     shouldDisableDate={date => {
                         return date < start;
                     }}

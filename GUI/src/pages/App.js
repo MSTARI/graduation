@@ -7,6 +7,8 @@ import Unorder from './unorder';
 import Notice from './notice';
 import Administrator from './administrator';
 import UserInfo from './userInfo';
+import UserManage from './userManage';
+import LaborManage from './laborManage';
 
 class App extends React.Component {
     render() {
@@ -20,6 +22,8 @@ class App extends React.Component {
                     <Route path="/notice" component={Notice} />
                     <Route path="/administrator" component={Administrator} />
                     <Route path="/userInfo" component={UserInfo} />
+                    <Route path="/userManage" component={UserManage} />
+                    <Route path="/laborManage" component={LaborManage} />
                 </Switch>
             </HashRouter>
         );

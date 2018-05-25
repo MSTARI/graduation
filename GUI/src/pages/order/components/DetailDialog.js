@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import {closeDetail, getUser, addOrder} from '../action';
+import Snackbar from 'material-ui/Snackbar';
+import {closeDetail, getUser, addOrder, cancelOrder} from '../action';
 import {getCookie} from '../../../commons/cookies';
 
 const cookie = getCookie('userId');
@@ -23,14 +24,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     closeDetail,
     getUser,
-    addOrder
+    addOrder,
+    cancelOrder
 };
 
 class Dialogs extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            course: ''
+            course: '',
+            snack: false
         };
     }
 
@@ -71,76 +74,99 @@ class Dialogs extends React.Component {
     }
 
     /**
-     * 提交数据到数据库
+     * 提交数据到数据库,会根据是否是管理员，同时具备取消预约的功能
      */
-    submit() {
-        const {addOrder, classroom, num, date} = this.props;
+    submit(admin) {
+        const {addOrder, classroom, num, date, closeDetail, detail, cancelOrder} = this.props;
         const {course} = this.state;
         const address = this.getAddress(),
             dateIndex = this.getDateIndex();
-        addOrder(cookie, {
+        if(!course) { // 判断dialog是否可以填写数据
+            if(!detail) { // 判断是否有课程数据
+                this.changeValue('snack', true);
+            } else {
+                if(admin) { // 如果是管理员才有取消预约功能
+                    cancelOrder(classroom, {
+                        date,
+                        dateIndex,
+                        num
+                    });
+                    closeDetail();
+                }
+            }
+        } else {
+            addOrder(admin, cookie, {
+                classroom,
+                date,
+                num,
+                course
+            },
             classroom,
-            date,
-            num,
-            course
-        },
-        classroom,
-        {
-            date,
-            dateIndex,
-            num,
-            address,
-            course
-        });
+            {
+                date,
+                dateIndex,
+                num,
+                address,
+                course
+            });
+            this.changeValue('course', '');
+            closeDetail();
+        }
     }
 
     render() {
-        const {detailDia, closeDetail, detail} = this.props;
+        const {location, detailDia, closeDetail, detail} = this.props;
+        const {course, snack} = this.state;
+        const admin = !!location.hash.slice(1);
         return (
-            <Dialog
-                actions={[
-                    <FlatButton
-                        label="确定"
-                        primary={true}
-                        onClick={() => {
-                            closeDetail();
-                            this.submit();
-                        }}
-                        disabled={!!detail}
-                    />,
-                    <FlatButton
-                        label="取消"
-                        secondary={true}
-                        onClick={() => closeDetail()}
-                    />
-                ]}
-                title="预约详情"
-                open={detailDia}
-                onRequestClose={() => closeDetail()}
-            >
-            {
-                !detail ?
-                <div>
-                    <TextField
-                        style={{width: '100%'}}
-                        floatingLabelText="预约班级"
-                        defaultValue={this.getAddress()}
-                        disabled={true}
-                    />
-                    <TextField
-                        style={{width: '100%'}}
-                        floatingLabelText="预约课程"
-                        value={this.state.course}
-                        onChange={(e, value) => this.changeValue('course', value)}
-                    />
-                </div> :
-                <div>
-                    <div>预约班级:{detail.address}</div>
-                    <br />
-                    <div>预约课程:{detail.course}</div>
-                </div>
-            }
-            </Dialog>
+            <div>
+                <Dialog
+                    actions={[
+                        <FlatButton
+                            label={admin && !!detail ? '取消预约' : '确定'}
+                            primary={true}
+                            onClick={() => this.submit(admin)}
+                        />,
+                        <FlatButton
+                            label="取消"
+                            secondary={true}
+                            onClick={() => closeDetail()}
+                        />
+                    ]}
+                    title="预约详情"
+                    open={detailDia}
+                    onRequestClose={() => closeDetail()}
+                >
+                {
+                    !detail ?
+                    <div>
+                        <TextField
+                            style={{width: '100%'}}
+                            floatingLabelText="预约班级"
+                            defaultValue={this.getAddress()}
+                            disabled={true}
+                        />
+                        <TextField
+                            style={{width: '100%'}}
+                            floatingLabelText="预约课程"
+                            value={course}
+                            onChange={(e, value) => this.changeValue('course', value)}
+                        />
+                    </div> :
+                    <div>
+                        <div>预约班级:{detail.address}</div>
+                        <br />
+                        <div>预约课程:{detail.course}</div>
+                    </div>
+                }
+                </Dialog>
+                <Snackbar
+                    open={snack}
+                    message="课程不能为空"
+                    autoHideDuration={1500}
+                    onRequestClose={() => this.changeValue('snack', false)}
+                />
+            </div>
         );
     }
 }

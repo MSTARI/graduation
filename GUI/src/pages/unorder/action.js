@@ -36,7 +36,7 @@ const cancelOrder = (id, order1, order2) => (dispatch, getState) => {
     })
         .then(res => {
             if(res) {
-                dispatch(userData());
+                dispatch(userData(id));
             }
         });
 };
