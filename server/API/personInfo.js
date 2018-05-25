@@ -6,6 +6,8 @@ const url = 'mongodb://localhost:27017/';
 
 router.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+    res.header("Content-Type", "application/json");
     next();
 });
 
