@@ -114,6 +114,18 @@ class Dialogs extends React.Component {
         }
     }
 
+    disabled(admin, detail) {
+        if(admin === 'false') {
+            if(!!detail) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     render() {
         const {location, detailDia, closeDetail, detail} = this.props;
         const {course, snack} = this.state;
@@ -126,6 +138,7 @@ class Dialogs extends React.Component {
                             label={admin === 'true' && !!detail ? '取消预约' : '确定'}
                             primary={true}
                             onClick={() => this.submit(admin)}
+                            disabled={this.disabled(admin, detail)}
                         />,
                         <FlatButton
                             label="取消"
