@@ -74,7 +74,7 @@ const getUser = () => (dispatch, getState) => { // 获取用户信息
 
 const addOrder = (admin, id, order1, classroom, order2) => (dispatch, getState) => { // 预约实验室
     const {classroom} = getState();
-    if(admin) {
+    if(admin === 'true') {
         postData('/laboratory_api/update', {
             classroom,
             order: order2

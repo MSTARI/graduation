@@ -38,7 +38,7 @@ class Lists extends React.Component {
 
     render() {
         const {dataSource, history, location, openDetail, openAdd, deleteNew} = this.props;
-        const admin = !!location.hash.slice(1);
+        const admin = location.hash.slice(1);
         return (
             <div className="m-notice-list">
                 <AppBar
@@ -46,7 +46,7 @@ class Lists extends React.Component {
                     title="公告栏"
                     iconElementLeft={<IconButton iconClassName="material-icons">arrow_back</IconButton>}
                     onLeftIconButtonClick={() => {history.goBack()}}
-                    iconElementRight={!admin ? null : <IconButton iconClassName="material-icons">add_circle_outline</IconButton>}
+                    iconElementRight={admin === 'false' ? null : <IconButton iconClassName="material-icons">add_circle_outline</IconButton>}
                     onRightIconButtonClick={() => openAdd()}
                 />
                 {
@@ -69,7 +69,7 @@ class Lists extends React.Component {
                                             onClick={() => openDetail(item.title, item.content, item.time)}
                                         />
                                         {
-                                            !admin ? null :
+                                            admin === 'false' ? null :
                                             <div style={{textAlign: 'right'}}>
                                                 <RaisedButton
                                                     icon={<FontIcon className="material-icons">delete_forever</FontIcon>}

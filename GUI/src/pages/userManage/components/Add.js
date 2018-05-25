@@ -29,7 +29,9 @@ class Add extends React.Component {
             email: '',
             phone: '',
             authority: 0,
-            snack: false
+            snack: false,
+            emailSnack: false,
+            phoneSnack: false
         };
     }
 
@@ -39,9 +41,35 @@ class Add extends React.Component {
         });
     }
 
+    /**
+     * 邮箱和手机号正则判断
+     * @param {String} type 
+     * @param {string} reg 
+     */
+    checkRegexp(type, reg) {
+        const email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
+            phone = /^1\d{10}/;
+        switch(type) {
+            case 'email':
+                if(!email.test(reg)) {
+                    this.changeValue('emailSnack', true);
+                    return false;
+                }
+                return true;
+            case 'phone':
+                if(!phone.test(reg)) {
+                    this.changeValue('phoneSnack', true);
+                    return false;
+                }
+                return true;
+            default:
+                return true;
+        }
+    }
+
     render() {
         const {closeAdd, addDia, addUser} = this.props;
-        const {id, name, address, email, phone, authority, snack} = this.state;
+        const {id, name, address, email, phone, authority, snack, emailSnack, phoneSnack} = this.state;
         return (
             <div>
                 <Dialog
@@ -50,9 +78,11 @@ class Add extends React.Component {
                             label="确定"
                             primary={true}
                             onClick={() => {
-                                this.changeValue('snack', true);
-                                addUser(id, name, email, phone, address, authority);
-                                closeAdd();
+                                if(this.checkRegexp('email', email) && this.checkRegexp('phone', phone)) {
+                                    this.changeValue('snack', true);
+                                    addUser(id, name, email, phone, address, authority);
+                                    closeAdd();
+                                }
                             }}
                             disabled={!id || !name || !address || !email || !phone}
                         />,
@@ -113,6 +143,18 @@ class Add extends React.Component {
                     message="添加成功"
                     autoHideDuration={1500}
                     onRequestClose={() => this.changeValue('snack', false)}
+                />
+                <Snackbar
+                    open={emailSnack}
+                    message="邮箱格式不正确"
+                    autoHideDuration={1500}
+                    onRequestClose={() => this.changeValue('emailSnack', false)}
+                />
+                <Snackbar
+                    open={phoneSnack}
+                    message="手机号格式不正确"
+                    autoHideDuration={1500}
+                    onRequestClose={() => this.changeValue('phoneSnack', false)}
                 />
             </div>
         );

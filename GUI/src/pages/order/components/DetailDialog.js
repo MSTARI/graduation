@@ -85,7 +85,7 @@ class Dialogs extends React.Component {
             if(!detail) { // 判断是否有课程数据
                 this.changeValue('snack', true);
             } else {
-                if(admin) { // 如果是管理员才有取消预约功能
+                if(admin === 'true') { // 如果是管理员才有取消预约功能
                     cancelOrder(classroom, {
                         date,
                         dateIndex,
@@ -117,13 +117,13 @@ class Dialogs extends React.Component {
     render() {
         const {location, detailDia, closeDetail, detail} = this.props;
         const {course, snack} = this.state;
-        const admin = !!location.hash.slice(1);
+        const admin = location.hash.slice(1);
         return (
             <div>
                 <Dialog
                     actions={[
                         <FlatButton
-                            label={admin && !!detail ? '取消预约' : '确定'}
+                            label={admin === 'true' && !!detail ? '取消预约' : '确定'}
                             primary={true}
                             onClick={() => this.submit(admin)}
                         />,
