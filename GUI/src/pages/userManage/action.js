@@ -51,7 +51,7 @@ const addUser = (id, name, email, phone, address, authority) => (dispatch, getSt
 };
 
 const modifyUser = (id, info) => (dispatch, getState) => {
-    postData('personInfo_api/modify', {
+    postData('/personInfo_api/modify', {
         id,
         info
     })
@@ -69,7 +69,7 @@ const setInfo = (key, value) => (dispatch, getState) => {
 };
 
 const deleteUser = id => (dispatch, getState) => {
-    postData('personInfo_api/delete', {
+    postData('/personInfo_api/delete', {
         id
     })
         .then(res => {

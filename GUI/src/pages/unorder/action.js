@@ -3,7 +3,7 @@ import createAction from './constants/createAction';
 import {getData, postData} from '../../commons/getData';
 
 const userData = id => (dispatch, getState) => {
-    postData('personInfo_api', {
+    postData('/personInfo_api', {
         id
     })
         .then(res => {
