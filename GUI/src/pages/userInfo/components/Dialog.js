@@ -31,6 +31,9 @@ class Dialogs extends React.Component {
         };
     }
 
+    /**
+     * 验证原密码正确性
+     */
     verify() {
         const cookie = getCookie('userId');
         let result = false;
@@ -44,6 +47,9 @@ class Dialogs extends React.Component {
         return result;
     }
 
+    /**
+     * 验证第二次输入的新密码是否与第一次相同
+     */
     again() {
         const {newa, newAgain} = this.state;
         if(newa === newAgain) {
@@ -52,6 +58,9 @@ class Dialogs extends React.Component {
         return false;
     }
 
+    /**
+     * 根据输入密码的不同，给出相应提示，全部正确则自动退出系统，用新密码登录
+     */
     submit() {
         const {history, updatePassword} = this.props;
         const cookie = getCookie('userId');

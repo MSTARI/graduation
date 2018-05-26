@@ -1,3 +1,7 @@
+/**
+ * 格式化时间戳
+ * @param {String} value 
+ */
 const formatDate = value => {
     const date = new Date(value);
     let year = date.getFullYear(),

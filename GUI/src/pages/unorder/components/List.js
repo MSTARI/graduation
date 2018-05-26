@@ -30,6 +30,11 @@ class Lists extends React.Component {
         this.props.laborData();
     }
 
+    /**
+     * 获取当天节数
+     * @param {String} classroom 
+     * @param {Number} date 
+     */
     dateIndex(classroom, date) {
         let result = 0;
         this.props.allData.forEach(item => {
@@ -44,6 +49,10 @@ class Lists extends React.Component {
         return result;
     }
 
+    /**
+     * 无预约跳转至order页
+     * @param {Object} history 
+     */
     jump(history) {
         history.push('/order');
     }

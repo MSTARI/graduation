@@ -1,8 +1,8 @@
 import ActionType from './constants/ActionType';
 
 const initialState = {
-    dataSource: [],
-    open: false
+    dataSource: [], // 用户信息源
+    open: false // dialog状态
 };
 
 const reducer = (state = initialState, action) => {

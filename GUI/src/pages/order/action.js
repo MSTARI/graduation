@@ -2,7 +2,10 @@ import ActionType from './constants/ActionType';
 import createAction from './constants/createAction';
 import {getData, postData} from '../../commons/getData';
 
-const laborData = () => (dispatch, getState) => { // 查询实验室数据
+/**
+ * 查询实验室数据
+ */
+const laborData = () => (dispatch, getState) => {
     getData('/laboratory_api')
         .then(res => {
             if(res.length) {
@@ -13,19 +16,31 @@ const laborData = () => (dispatch, getState) => { // 查询实验室数据
         });
 };
 
-const openDialog = () => (dispatch, getState) => { // 打开搜索dialog
+/**
+ * 打开搜索dialog
+ */
+const openDialog = () => (dispatch, getState) => {
     dispatch(createAction(ActionType.DIALOG, {
         open: true
     }));
 };
 
-const closeDialog = () => (dispatch, getState) => { // 关闭搜索dialog
+/**
+ * 关闭搜索dialog
+ */
+const closeDialog = () => (dispatch, getState) => {
     dispatch(createAction(ActionType.DIALOG, {
         open: false
     }));
 };
 
-const openDetail = (detail, date, num) => (dispatch, getState) => { // 打开详情dialog
+/**
+ * 打开详情dialog，并且设置数据
+ * @param {Object} detail 
+ * @param {Number} date 
+ * @param {Number} num 
+ */
+const openDetail = (detail, date, num) => (dispatch, getState) => {
     dispatch(createAction(ActionType.DIALOG, {
         detailDia: true,
         detail,
@@ -34,19 +49,31 @@ const openDetail = (detail, date, num) => (dispatch, getState) => { // 打开详
     }));
 };
 
-const closeDetail = () => (dispatch, getState) => { // 关闭详情dialog
+/**
+ * 关闭详情dialog
+ */
+const closeDetail = () => (dispatch, getState) => {
     dispatch(createAction(ActionType.DIALOG, {
         detailDia: false
     }));
 };
 
-const setInfo = (key, value) => (dispatch, getState) => { // 设置props
+/**
+ * 设置Props
+ * @param {String} key 
+ * @param {String} value 
+ */
+const setInfo = (key, value) => (dispatch, getState) => {
     dispatch(createAction(ActionType.SET, {
         [key]: value
     }));
 };
 
-const search = classroom => (dispatch, getState) => { // 搜索功能，页面中判断日期的显示
+/**
+ * 搜索功能，页面中判断日期的显示
+ * @param {String} classroom 
+ */
+const search = classroom => (dispatch, getState) => {
     getData('/laboratory_api/search', {
         params: {
             name: classroom
@@ -61,7 +88,10 @@ const search = classroom => (dispatch, getState) => { // 搜索功能，页面�
         });
 };
 
-const getUser = () => (dispatch, getState) => { // 获取用户信息
+/**
+ * 获取用户信息
+ */
+const getUser = () => (dispatch, getState) => {
     postData('/personInfo_api')
         .then(res => {
             if(res.length) {
@@ -72,7 +102,15 @@ const getUser = () => (dispatch, getState) => { // 获取用户信息
         });
 };
 
-const addOrder = (admin, id, order1, classroom, order2) => (dispatch, getState) => { // 预约实验室
+/**
+ * 预约实验室
+ * @param {String} admin 
+ * @param {String} id 
+ * @param {Object} order1 
+ * @param {String} classroom 
+ * @param {Object} order2 
+ */
+const addOrder = (admin, id, order1, classroom, order2) => (dispatch, getState) => {
     const {classroom} = getState();
     if(admin === 'true') {
         postData('/laboratory_api/update', {
@@ -101,7 +139,12 @@ const addOrder = (admin, id, order1, classroom, order2) => (dispatch, getState) 
     }
 };
 
-const cancelOrder = (classroom, order) => (dispatch, getState) => { // 管理员取消预约，强制取消预约需要自行发公告通知
+/**
+ * 管理员取消预约，强制取消预约需要自行发公告通知
+ * @param {String} classroom 
+ * @param {Object} order 
+ */
+const cancelOrder = (classroom, order) => (dispatch, getState) => {
     const {classroom} = getState();
     postData('/laboratory_api/update', {
         classroom,

@@ -4,7 +4,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
-import {closeDetail, getUser, addOrder, cancelOrder} from '../action';
+import {closeDetail, getUser, addOrder, cancelOrder, setInfo} from '../action';
 import {getCookie} from '../../../commons/cookies';
 
 const cookie = getCookie('userId');
@@ -25,13 +25,15 @@ const mapDispatchToProps = {
     closeDetail,
     getUser,
     addOrder,
-    cancelOrder
+    cancelOrder,
+    setInfo
 };
 
 class Dialogs extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            address: '',
             course: '',
             snack: false
         };
@@ -79,7 +81,7 @@ class Dialogs extends React.Component {
     submit(admin) {
         const {addOrder, classroom, num, date, closeDetail, detail, cancelOrder} = this.props;
         const {course} = this.state;
-        const address = this.getAddress(),
+        const address = admin === 'true' ? this.state.address : this.getAddress(),
             dateIndex = this.getDateIndex();
         if(!course) { // 判断dialog是否可以填写数据
             if(!detail) { // 判断是否有课程数据
@@ -114,6 +116,11 @@ class Dialogs extends React.Component {
         }
     }
 
+    /**
+     * 根据是否是管理员，可以直接取消预约
+     * @param {String} admin 
+     * @param {String} detail 
+     */
     disabled(admin, detail) {
         if(admin === 'false') {
             if(!!detail) {
@@ -128,7 +135,7 @@ class Dialogs extends React.Component {
 
     render() {
         const {location, detailDia, closeDetail, detail} = this.props;
-        const {course, snack} = this.state;
+        const {address, course, snack} = this.state;
         const admin = location.hash.slice(1);
         return (
             <div>
@@ -156,8 +163,9 @@ class Dialogs extends React.Component {
                         <TextField
                             style={{width: '100%'}}
                             floatingLabelText="预约班级"
-                            defaultValue={this.getAddress()}
-                            disabled={true}
+                            defaultValue={admin === 'true' ? address : this.getAddress()}
+                            disabled={admin === 'false'}
+                            onChange={(e, value) => this.changeValue('address', value)}
                         />
                         <TextField
                             style={{width: '100%'}}

@@ -23,6 +23,10 @@ class Lists extends React.Component {
         this.props.userData();
     }
 
+    /**
+     * 注销
+     * @param {Object} history 
+     */
     logout(history) {
         clearCookie('userId');
         history.push('/login');

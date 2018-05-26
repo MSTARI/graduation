@@ -25,6 +25,10 @@ class Lists extends React.Component {
         this.props.noticeData();
     }
 
+    /**
+     * 格式化时间戳
+     * @param {Number} timestamp 
+     */
     formatTime(timestamp) {
         const time = new Date(timestamp);
         const year = time.getFullYear(),

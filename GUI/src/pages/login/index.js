@@ -20,6 +20,11 @@ class Login extends React.Component {
         };
     }
 
+    /**
+     * 通过信息检测，登录系统
+     * @param {String} username 
+     * @param {String} password 
+     */
     checkLogin(username, password) {
         postData('/personInfo_api')
             .then(res => {

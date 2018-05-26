@@ -1,5 +1,8 @@
 import {postData} from './getData';
 
+/**
+ * 获取用户信息
+ */
 const userData = () => {
     return postData('/personInfo_api')
         .then(res => {
@@ -11,6 +14,10 @@ const userData = () => {
         });
 };
 
+/**
+ * 通过对比用户列表信息，验证登录用户是否是管理员
+ * @param {String} id 
+ */
 const verifyAdmin = id => {
     return userData()
         .then(res => {

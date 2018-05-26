@@ -1,7 +1,7 @@
 import ActionType from './constants/ActionType';
 
 const initialState = {
-    dataSource: []
+    dataSource: [] // 用户数据源
 };
 
 const reducer = (state = initialState, action) => {
