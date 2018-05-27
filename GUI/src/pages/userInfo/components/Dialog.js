@@ -107,6 +107,7 @@ class Dialogs extends React.Component {
                     title="修改密码"
                     open={open}
                     onRequestClose={() => closeDialog()}
+                    autoScrollBodyContent={true}
                 >
                     <TextField
                         style={{width: '100%'}}

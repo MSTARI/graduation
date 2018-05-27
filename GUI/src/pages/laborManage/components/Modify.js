@@ -62,6 +62,7 @@ class Modify extends React.Component {
                 title="修改实验室信息"
                 open={modifyDia}
                 onRequestClose={() => closeModify()}
+                autoScrollBodyContent={true}
             >
                 <TextField
                     style={{width: '100%'}}

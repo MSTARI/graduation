@@ -56,6 +56,7 @@ class Dialogs extends React.Component {
                 title="新增公告"
                 open={addDia}
                 onRequestClose={() => closeAdd()}
+                autoScrollBodyContent={true}
             >
                 <TextField
                     style={{width: '100%'}}
