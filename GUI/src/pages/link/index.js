@@ -59,7 +59,7 @@ class Laboratory extends React.Component {
                         <i>公告：{notice[0].title}</i>
                     </div>
                 }
-                <List className={'m-link-' + (admin === 'true' ? 'admin' : 'user')}>
+                <List className={'m-link-' + (admin ? 'admin' : 'user')}>
                     <ListItem
                         style={{background: '#E0F7FA', marginBottom: '5%'}}
                         primaryText="实验室预约"
