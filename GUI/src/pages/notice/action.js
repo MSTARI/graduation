@@ -60,7 +60,7 @@ const deleteNew = title => (dispatch, getState) => {
  * @param {Number} time 
  */
 const openDetail = (title, content, time) => (dispatch, getState) => {
-    dispatch(createAction(ActionType.OPENDIALOG, {
+    dispatch(createAction(ActionType.DIALOG, {
         detailDia: true,
         title,
         content,
@@ -72,7 +72,7 @@ const openDetail = (title, content, time) => (dispatch, getState) => {
  * 关闭公告详情dialog
  */
 const closeDetail = () => (dispatch, getState) => {
-    dispatch(createAction(ActionType.CLOSEDIALOG, {
+    dispatch(createAction(ActionType.DIALOG, {
         detailDia: false
     }));
 };
@@ -81,7 +81,7 @@ const closeDetail = () => (dispatch, getState) => {
  * 打开添加dialog
  */
 const openAdd = () => (dispatch, getState) => {
-    dispatch(createAction(ActionType.OPENDIALOG, {
+    dispatch(createAction(ActionType.DIALOG, {
         addDia: true
     }));
 };
@@ -90,8 +90,27 @@ const openAdd = () => (dispatch, getState) => {
  * 关闭添加dialog
  */
 const closeAdd = () => (dispatch, getState) => {
-    dispatch(createAction(ActionType.CLOSEDIALOG, {
+    dispatch(createAction(ActionType.DIALOG, {
         addDia: false
+    }));
+};
+
+/**
+ * 打开删除dialog
+ */
+const openDelete = title => (dispatch, getState) => {
+    dispatch(createAction(ActionType.DIALOG, {
+        deleteDia: true,
+        title
+    }));
+};
+
+/**
+ * 关闭删除dialog
+ */
+const closeDelete = () => (dispatch, getState) => {
+    dispatch(createAction(ActionType.DIALOG, {
+        deleteDia: false
     }));
 };
 
@@ -102,5 +121,7 @@ export {
     openDetail,
     closeDetail,
     openAdd,
-    closeAdd
+    closeAdd,
+    openDelete,
+    closeDelete
 };

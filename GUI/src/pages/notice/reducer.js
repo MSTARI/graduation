@@ -4,6 +4,7 @@ const initialState = {
     dataSource: [], // 公告数据源
     detailDia: false, // 公告详情dialog状态
     addDia: false, // 添加dialog状态
+    deleteDia: false, // 删除dialog状态
     title: '', // 公告标题
     content: '' // 公告内容
 };
@@ -13,8 +14,7 @@ const reducer = (state = initialState, action) => {
     switch (type) {
         case ActionType.GETDATA:
         case ActionType.ADDDATA:
-        case ActionType.OPENDIALOG:
-        case ActionType.CLOSEDIALOG:
+        case ActionType.DIALOG:
             return {
                 ...state,
                 ...payload

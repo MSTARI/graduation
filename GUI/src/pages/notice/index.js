@@ -5,6 +5,7 @@ import List from './components/List';
 import './index.scss';
 import AddDialog from './components/AddDialog';
 import DetailDialog from './components/DetailDialog';
+import DeleteDialog from './components/DeleteDialog';
 
 class Notice extends React.Component {
     render() {
@@ -14,6 +15,7 @@ class Notice extends React.Component {
                     <List history={this.props.history} location={this.props.location} />
                     <AddDialog />
                     <DetailDialog />
+                    <DeleteDialog />
                 </div>
             </Provider>
         );

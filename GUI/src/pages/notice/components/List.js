@@ -5,7 +5,7 @@ import {List, ListItem} from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import {noticeData, openDetail, openAdd, deleteNew} from '../action';
+import {noticeData, openDetail, openAdd, openDelete} from '../action';
 
 const mapStateToProps = state => {
     return {
@@ -17,7 +17,7 @@ const mapDispatchToProps = {
     noticeData,
     openDetail,
     openAdd,
-    deleteNew
+    openDelete
 };
 
 class Lists extends React.Component {
@@ -41,7 +41,7 @@ class Lists extends React.Component {
     }
 
     render() {
-        const {dataSource, history, location, openDetail, openAdd, deleteNew} = this.props;
+        const {dataSource, history, location, openDetail, openAdd, openDelete} = this.props;
         const admin = location.hash.slice(1);
         return (
             <div className="m-notice-list">
@@ -78,7 +78,7 @@ class Lists extends React.Component {
                                                 <RaisedButton
                                                     icon={<FontIcon className="material-icons">delete_forever</FontIcon>}
                                                     secondary={true}
-                                                    onClick={() => deleteNew(item.title)}
+                                                    onClick={() => openDelete(item.title)}
                                                 />
                                             </div>
                                         }
