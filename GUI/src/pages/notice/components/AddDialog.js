@@ -41,11 +41,10 @@ class Dialogs extends React.Component {
                         label="确定"
                         primary={true}
                         onClick={() => {
-                            if(title && content) {
-                                addNew(title, content);
-                                closeAdd();
-                            }
+                            addNew(title, content);
+                            closeAdd();
                         }}
+                        disabled={!title || !content}
                     />,
                     <FlatButton
                         label="取消"
@@ -57,6 +56,7 @@ class Dialogs extends React.Component {
                 open={addDia}
                 onRequestClose={() => closeAdd()}
                 autoScrollBodyContent={true}
+                repositionOnUpdate={false}
             >
                 <TextField
                     style={{width: '100%'}}

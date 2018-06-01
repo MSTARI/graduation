@@ -80,6 +80,7 @@ class Add extends React.Component {
                     open={addDia}
                     onRequestClose={() => closeAdd()}
                     autoScrollBodyContent={true}
+                    repositionOnUpdate={false}
                 >
                     <TextField
                         style={{width: '100%'}}

@@ -48,7 +48,7 @@ class Add extends React.Component {
      */
     checkRegexp(type, reg) {
         const email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
-            phone = /^1\d{10}/;
+            phone = /^1\d{10}$/;
         switch(type) {
             case 'email':
                 if(!email.test(reg)) {
@@ -96,6 +96,7 @@ class Add extends React.Component {
                     open={addDia}
                     onRequestClose={() => closeAdd()}
                     autoScrollBodyContent={true}
+                    repositionOnUpdate={false}
                 >
                     <TextField
                         style={{width: '100%'}}

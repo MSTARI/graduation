@@ -108,6 +108,7 @@ class Dialogs extends React.Component {
                     open={open}
                     onRequestClose={() => closeDialog()}
                     autoScrollBodyContent={true}
+                    repositionOnUpdate={false}
                 >
                     <TextField
                         style={{width: '100%'}}

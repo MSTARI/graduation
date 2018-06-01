@@ -5,6 +5,7 @@ import {List, ListItem} from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider';
 import {noticeData, openDetail, openAdd, openDelete} from '../action';
 
 const mapStateToProps = state => {
@@ -82,6 +83,7 @@ class Lists extends React.Component {
                                                 />
                                             </div>
                                         }
+                                        <Divider />
                                     </div>
                                 );
                             })

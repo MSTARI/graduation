@@ -83,8 +83,8 @@ class Dialogs extends React.Component {
         const {course} = this.state;
         const address = admin === 'true' ? this.state.address : this.getAddress(),
             dateIndex = this.getDateIndex();
-        if(!course) { // 判断dialog是否可以填写数据
-            if(!detail) { // 判断是否有课程数据
+        if(!course) { // 根据填写课程处判断是否是可预约状态
+            if(!detail || !address) { // 判断是否是可填写的状态，detail考虑全局填写，address考虑管理员填写班级部分
                 this.changeValue('snack', true);
             } else {
                 if(admin === 'true') { // 如果是管理员才有取消预约功能
@@ -156,6 +156,7 @@ class Dialogs extends React.Component {
                     title="预约详情"
                     open={detailDia}
                     onRequestClose={() => closeDetail()}
+                    repositionOnUpdate={false}
                 >
                 {
                     !detail ?
@@ -183,7 +184,7 @@ class Dialogs extends React.Component {
                 </Dialog>
                 <Snackbar
                     open={snack}
-                    message="课程不能为空"
+                    message="填写信息不能为空"
                     autoHideDuration={1500}
                     onRequestClose={() => this.changeValue('snack', false)}
                 />
