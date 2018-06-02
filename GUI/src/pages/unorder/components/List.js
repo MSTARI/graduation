@@ -57,6 +57,26 @@ class Lists extends React.Component {
         history.push('/order');
     }
 
+    /**
+     * 根据信息判断预约实验室是否被管理员取消
+     * @param {String} classroom 
+     * @param {Number} date 
+     * @param {Number} num 
+     */
+    judgeOrder(classroom, date, num) {
+        let result = false;
+        this.props.allData.forEach(item => {
+            if(item.name === classroom) {
+                item.plan.forEach(pItem => {
+                    if(pItem.date === date && pItem.status[num]) {
+                        result = true;
+                    }
+                });
+            }
+        });
+        return result;
+    }
+
     render() {
         const {dataSource, history, openDia} = this.props;
         return (
@@ -98,22 +118,30 @@ class Lists extends React.Component {
                                                     <p>
                                                         课节：{item.num + 1}
                                                     </p>
-                                                    <RaisedButton
-                                                        label="取消预约"
-                                                        primary={true}
-                                                        fullWidth={true}
-                                                        onClick={() => {
-                                                            openDia(cookie, {
-                                                                classroom: item.classroom,
-                                                                date: item.date,
-                                                                num: item.num
-                                                            }, {
-                                                                classroom: item.classroom,
-                                                                dateIndex: this.dateIndex(item.classroom, item.date),
-                                                                num: item.num
-                                                            });
-                                                        }}
-                                                    />
+                                                    {
+                                                        this.judgeOrder(item.classroom, item.date, item.num) ?
+                                                        <RaisedButton
+                                                            label="取消预约"
+                                                            primary={true}
+                                                            fullWidth={true}
+                                                            onClick={() => {
+                                                                openDia(cookie, {
+                                                                    classroom: item.classroom,
+                                                                    date: item.date,
+                                                                    num: item.num
+                                                                }, {
+                                                                    classroom: item.classroom,
+                                                                    dateIndex: this.dateIndex(item.classroom, item.date),
+                                                                    num: item.num
+                                                                });
+                                                            }}
+                                                        /> :
+                                                        <RaisedButton
+                                                            label="被取消"
+                                                            fullWidth={true}
+                                                            disabled={true}
+                                                        />
+                                                    }
                                                 </div>
                                             }
                                         />

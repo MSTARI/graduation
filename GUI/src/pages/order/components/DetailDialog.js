@@ -83,8 +83,8 @@ class Dialogs extends React.Component {
         const {course} = this.state;
         const address = admin === 'true' ? this.state.address : this.getAddress(),
             dateIndex = this.getDateIndex();
-        if(!course) { // 根据填写课程处判断是否是可预约状态
-            if(!detail || !address) { // 判断是否是可填写的状态，detail考虑全局填写，address考虑管理员填写班级部分
+        if(!course || !address) { // 根据填写课程处判断是否是可预约状态
+            if(!detail) { // 判断是否是展示详情状态
                 this.changeValue('snack', true);
             } else {
                 if(admin === 'true') { // 如果是管理员才有取消预约功能
