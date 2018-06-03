@@ -156,6 +156,7 @@ class Dialogs extends React.Component {
                     title="预约详情"
                     open={detailDia}
                     onRequestClose={() => closeDetail()}
+                    autoScrollBodyContent={true}
                     repositionOnUpdate={false}
                 >
                 {

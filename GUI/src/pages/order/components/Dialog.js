@@ -65,8 +65,6 @@ class Dialogs extends React.Component {
                 title="查询预约实验室"
                 open={open}
                 onRequestClose={() => closeDialog()}
-                autoScrollBodyContent={true}
-                repositionOnUpdate={false}
             >
                 <SelectField
                     style={{width: '100%'}}
